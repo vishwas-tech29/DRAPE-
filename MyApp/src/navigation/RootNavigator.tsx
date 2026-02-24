@@ -1,4 +1,5 @@
 import React from 'react';
+import { Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -16,13 +17,15 @@ import SearchResultsScreen from '../screens/buyer/SearchResults';
 import SnapScreen from '../screens/buyer/Snap';
 import AIScanningScreen from '../screens/buyer/AIScanning';
 import ResultsScreen from '../screens/buyer/Results';
-import ProductDetailScreen from '../screens/buyer/ProductDetail';
-import VirtualTryOnScreen from '../screens/buyer/VirtualTryOn';
-import CartScreen from '../screens/buyer/Cart';
-import CheckoutScreen from '../screens/buyer/Checkout';
-import OrderSuccessScreen from '../screens/buyer/OrderSuccess';
-import SavedBoardsScreen from '../screens/buyer/SavedBoards';
-import ProfileScreen from '../screens/buyer/Profile';
+import {
+  ProductDetailScreen,
+  VirtualTryOnScreen,
+  CartScreen,
+  CheckoutScreen,
+  OrderSuccessScreen,
+  SavedBoardsScreen,
+  ProfileScreen,
+} from '../screens/buyer/PlaceholderScreens';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
