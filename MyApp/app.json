@@ -23,7 +23,7 @@
       "package": "com.drape.fashion"
     },
     "web": {
-      "output": "static",
+      "output": "single",
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
