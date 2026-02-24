@@ -5,22 +5,22 @@ import { RootNavigator } from './src/navigation';
 import { useUserStore } from './src/store';
 
 export default function App() {
-  const { user, appMode, loadFromStorage } = useUserStore();
+  const { user, isLoggedIn, hasCompletedOnboarding, loadFromStorage } = useUserStore();
 
   useEffect(() => {
     // Load user data from storage on app start
     loadFromStorage();
   }, []);
 
-  const isLoggedIn = !!user?.isLoggedIn;
-  const hasCompletedOnboarding = appMode?.hasCompletedOnboarding ?? false;
+  const loggedIn = !!isLoggedIn;
+  const onboardingDone = hasCompletedOnboarding ?? false;
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
         <RootNavigator
-          isLoggedIn={isLoggedIn}
-          hasCompletedOnboarding={hasCompletedOnboarding}
+          isLoggedIn={loggedIn}
+          hasCompletedOnboarding={onboardingDone}
         />
       </SafeAreaProvider>
     </GestureHandlerRootView>
