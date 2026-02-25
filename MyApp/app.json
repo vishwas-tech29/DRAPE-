@@ -1,5 +1,6 @@
 {
   "expo": {
+    "main": "App.tsx",
     "name": "DRAPE",
     "slug": "DRAPE",
     "version": "1.0.0",

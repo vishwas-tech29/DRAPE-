@@ -1,1 +1,1 @@
-export { RootNavigator, default } from './RootNavigator';
+export { RootNavigator } from './RootNavigator';

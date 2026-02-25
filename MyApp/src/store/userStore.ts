@@ -1,19 +1,35 @@
 import { create } from 'zustand';
 import { Platform } from 'react-native';
 
-// MMKV is only available on native platforms, not web
-let storage: any = null;
+// Simple in-memory storage fallback that works everywhere
+class MemoryStorage {
+  private data: Map<string, string> = new Map();
 
-try {
-  // Only initialize MMKV on native platforms
-  if (Platform.OS !== 'web') {
+  getString(key: string): string | undefined {
+    return this.data.get(key);
+  }
+
+  set(key: string, value: string): void {
+    this.data.set(key, value);
+  }
+
+  clearAll(): void {
+    this.data.clear();
+  }
+}
+
+// Use memory storage by default (MMKV is optional for native)
+let storage: any = new MemoryStorage();
+
+// Optionally try to use MMKV on native platforms only
+if (Platform.OS !== 'web') {
+  try {
     const { MMKV } = require('react-native-mmkv');
     storage = new MMKV();
+  } catch (error) {
+    // Fall back to memory storage if MMKV fails
+    console.warn('MMKV not available, using memory storage');
   }
-} catch (error) {
-  console.warn('MMKV initialization failed, using fallback storage:', error);
-  // Fallback for web or if MMKV fails
-  storage = null;
 }
 
 export interface User {
@@ -133,8 +149,10 @@ export const useUserStore = create<UserStore>((set, get) => ({
         hasCompletedOnboarding: false,
       },
     });
-    if (storage) {
+    try {
       storage.clearAll();
+    } catch (error) {
+      console.warn('Error clearing storage:', error);
     }
   },
 
@@ -209,10 +227,6 @@ export const useUserStore = create<UserStore>((set, get) => ({
   },
 
   loadFromStorage: () => {
-    if (!storage) {
-      console.warn('Storage not available on this platform');
-      return;
-    }
     try {
       const userString = storage.getString('user');
       const modeString = storage.getString('appMode');
@@ -224,15 +238,11 @@ export const useUserStore = create<UserStore>((set, get) => ({
       if (cartString) set({ cart: JSON.parse(cartString) });
       if (savedItemsString) set({ savedItems: JSON.parse(savedItemsString) });
     } catch (error) {
-      console.error('Error loading from storage:', error);
+      console.warn('Error loading from storage:', error);
     }
   },
 
   saveToStorage: () => {
-    if (!storage) {
-      console.warn('Storage not available on this platform');
-      return;
-    }
     try {
       const state = get();
       storage.set('user', JSON.stringify(state.user));
@@ -240,7 +250,7 @@ export const useUserStore = create<UserStore>((set, get) => ({
       storage.set('cart', JSON.stringify(state.cart));
       storage.set('savedItems', JSON.stringify(state.savedItems));
     } catch (error) {
-      console.error('Error saving to storage:', error);
+      console.warn('Error saving to storage:', error);
     }
   },
 }));

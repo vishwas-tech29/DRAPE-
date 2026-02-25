@@ -5,30 +5,22 @@ import { RootNavigator } from './src/navigation';
 import { useUserStore } from './src/store';
 
 export default function App() {
-  const [isReady, setIsReady] = useState(false);
-  // Subscribe to store changes
-  const user = useUserStore((state) => state.user);
-  const appMode = useUserStore((state) => state.appMode);
-  const loadFromStorage = useUserStore((state) => state.loadFromStorage);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [onboardingDone, setOnboardingDone] = useState(false);
 
   useEffect(() => {
-    // Load user data from storage on app start
+    // Load persisted state from storage
     try {
-      loadFromStorage();
+      const store = useUserStore.getState();
+      store.loadFromStorage();
+      
+      // Update local state with store values
+      setLoggedIn(store.user?.isLoggedIn ?? false);
+      setOnboardingDone(store.appMode?.hasCompletedOnboarding ?? false);
     } catch (error) {
-      console.error('Error loading from storage:', error);
+      console.warn('Failed to load from storage:', error);
     }
-    // Mark as ready - navigation will handle the actual routing
-    setIsReady(true);
-  }, [loadFromStorage]);
-
-  if (!isReady) {
-    return null;
-  }
-
-  // Use Zustand store state directly
-  const loggedIn = user?.isLoggedIn ?? false;
-  const onboardingDone = appMode?.hasCompletedOnboarding ?? false;
+  }, []);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
