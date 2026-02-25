@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, SafeAreaView } from 'react-native';
-import { useUserStore } from '../store';
-import { Colors, Typography, Spacing, Layout } from '../constants';
-import { Button } from '../components';
+import { useUserStore } from '../../store';
+import { Colors, Typography, Spacing, Layout } from '../../constants';
+import { Button } from '../../components';
 
 const ModeSelectionScreen = ({ navigation }: any) => {
   const { setAppMode } = useUserStore();

@@ -125,8 +125,8 @@ const AIScanningScreen = ({ route, navigation }: any) => {
             style={[
               styles.tag,
               {
-                left: tag.x,
-                top: tag.y,
+                left: Number(tag.x),
+                top: Number(tag.y),
                 opacity: tagOpacities[index],
                 transform: [
                   {
@@ -136,7 +136,7 @@ const AIScanningScreen = ({ route, navigation }: any) => {
                     }),
                   },
                 ],
-              },
+              } as any,
             ]}
           >
             <Text style={styles.tagText}>{tag.text}</Text>
@@ -206,10 +206,7 @@ const styles = StyleSheet.create({
     height: 2,
     backgroundColor: Colors.warmGold,
     opacity: 0.8,
-    shadowColor: Colors.warmGold,
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.8,
-    shadowRadius: 10,
+    boxShadow: '0 0 10 0 rgba(184, 134, 74, 0.8)',
     elevation: 5,
   },
   tag: {

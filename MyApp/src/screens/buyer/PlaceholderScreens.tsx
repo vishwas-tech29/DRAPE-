@@ -13,7 +13,7 @@ import { useUserStore } from '../../store';
 import { Product } from '../../services';
 import { Colors, Typography, Spacing, Layout, BorderRadius } from '../../constants';
 import { Button, Header, ColorSwatch, SizeButton } from '../../components';
-const ProductDetailScreen = ({ route, navigation }: any) => {
+export const ProductDetailScreen = ({ route, navigation }: any) => {
   const { product } = route.params as { product: Product };
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
@@ -195,7 +195,7 @@ const ProductDetailScreen = ({ route, navigation }: any) => {
 };
 
 // Virtual Try-On Screen
-const VirtualTryOnScreen = ({ route, navigation }: any) => {
+export const VirtualTryOnScreen = ({ route, navigation }: any) => {
   const { product } = route.params as { product: Product };
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
@@ -306,7 +306,7 @@ const VirtualTryOnScreen = ({ route, navigation }: any) => {
 };
 
 // Cart Screen
-const CartScreen = ({ navigation }: any) => {
+export const CartScreen = ({ navigation }: any) => {
   const { cart, removeFromCart, getCartTotal } = useUserStore();
 
   return (
@@ -366,7 +366,7 @@ const CartScreen = ({ navigation }: any) => {
 };
 
 // Checkout Screen
-const CheckoutScreen = ({ navigation }: any) => {
+export const CheckoutScreen = ({ navigation }: any) => {
   const { getCartTotal } = useUserStore();
 
   const handlePlaceOrder = () => {
@@ -430,7 +430,7 @@ const CheckoutScreen = ({ navigation }: any) => {
 };
 
 // Order Success Screen
-const OrderSuccessScreen = ({ navigation }: any) => {
+export const OrderSuccessScreen = ({ navigation }: any) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
@@ -463,7 +463,7 @@ const OrderSuccessScreen = ({ navigation }: any) => {
 };
 
 // Saved Boards Screen
-const SavedBoardsScreen = ({ navigation }: any) => {
+export const SavedBoardsScreen = ({ navigation }: any) => {
   const boards = [
     { id: '1', name: 'Wedding Wear', items: 12 },
     { id: '2', name: 'Casual Vibes', items: 8 },
@@ -508,7 +508,7 @@ const SavedBoardsScreen = ({ navigation }: any) => {
 };
 
 // Profile Screen
-const ProfileScreen = ({ navigation }: any) => {
+export const ProfileScreen = ({ navigation }: any) => {
   const { user, logout, setAppMode } = useUserStore();
 
   const handleSwitchMode = () => {
@@ -866,8 +866,12 @@ const styles = StyleSheet.create({
     ...Typography.label,
     color: Colors.darkText,
   },
+  shareIcon: {
+    fontSize: 20,
+    color: Colors.darkText,
+  },
   totalRow: {
-    paddingTopMargin: Spacing.md,
+    paddingTop: Spacing.md,
     borderTopWidth: 1,
     borderTopColor: Colors.softBorder,
   },
@@ -1119,18 +1123,3 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 });
-
-const SearchScreen = ({ navigation }: any) => <PlaceholderScreen title="Search" />;
-const SearchResultsScreen = ({ navigation }: any) => <PlaceholderScreen title="Search Results" />;
-const SnapScreen = ({ navigation }: any) => <PlaceholderScreen title="Snap" />;
-const AIScanningScreen = ({ navigation }: any) => <PlaceholderScreen title="AI Scanning" />;
-const ResultsScreen = ({ navigation }: any) => <PlaceholderScreen title="Results" />;
-
-const PlaceholderScreen = ({ title }: { title: string }) => (
-  <SafeAreaView style={styles.container}>
-    <View style={styles.content}>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.subtitle}>Screen content coming soon...</Text>
-    </View>
-  </SafeAreaView>
-);

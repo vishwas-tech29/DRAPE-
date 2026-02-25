@@ -10,11 +10,11 @@ import {
   Dimensions,
   ScrollView,
 } from 'react-native';
-import { useUserStore } from '../store';
-import { productService, mockProducts } from '../services';
-import { Product } from '../services';
-import { Colors, Typography, Spacing, Layout, BorderRadius } from '../constants';
-import { Header, ProductCard, CategoryChips } from '../components';
+import { useUserStore } from '../../store';
+import { productService, mockProducts } from '../../services';
+import { Product } from '../../services';
+import { Colors, Typography, Spacing, Layout, BorderRadius } from '../../constants';
+import { Header, ProductCard, CategoryChips } from '../../components';
 
 const { width } = Dimensions.get('window');
 const COLUMN_COUNT = 2;

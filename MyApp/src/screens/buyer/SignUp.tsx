@@ -10,9 +10,9 @@ import {
   Platform,
   ScrollView,
 } from 'react-native';
-import { useUserStore } from '../store';
-import { Colors, Typography, Spacing, Layout, BorderRadius } from '../constants';
-import { Button } from '../components';
+import { useUserStore } from '../../store';
+import { Colors, Typography, Spacing, Layout, BorderRadius } from '../../constants';
+import { Button } from '../../components';
 
 const SignUpScreen = ({ navigation }: any) => {
   const [phoneNumber, setPhoneNumber] = useState('');

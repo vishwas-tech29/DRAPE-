@@ -7,9 +7,9 @@ import {
   SafeAreaView,
   ScrollView,
 } from 'react-native';
-import { useUserStore } from '../store';
-import { Colors, Typography, Spacing, Layout, BorderRadius } from '../constants';
-import { Button } from '../components';
+import { useUserStore } from '../../store';
+import { Colors, Typography, Spacing, Layout, BorderRadius } from '../../constants';
+import { Button } from '../../components';
 
 interface QuizState {
   wearMost?: 'Ethnic' | 'Western' | 'Fusion' | 'All of These';

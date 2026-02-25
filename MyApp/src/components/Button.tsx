@@ -35,10 +35,10 @@ const Button: React.FC<ButtonProps> = ({
   const isDisabled = disabled || loading;
 
   const getButtonStyle = (): ViewStyle => {
-    const baseStyle = {
+    const baseStyle: ViewStyle = {
       borderRadius: BorderRadius.button,
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: 'center' as const,
+      alignItems: 'center' as const,
       flexDirection: 'row' as const,
     };
 

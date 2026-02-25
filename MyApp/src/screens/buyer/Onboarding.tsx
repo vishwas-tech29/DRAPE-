@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { StyleSheet, View, Text, FlatList, ViewToken, SafeAreaView, Dimensions } from 'react-native';
-import { Colors, Typography, Spacing, Layout } from '../constants';
-import { Button } from '../components';
+import { Colors, Typography, Spacing, Layout } from '../../constants';
+import { Button } from '../../components';
 
 interface Slide {
   id: string;

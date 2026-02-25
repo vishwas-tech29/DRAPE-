@@ -1,19 +1,34 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { RootNavigator } from './src/navigation';
 import { useUserStore } from './src/store';
 
 export default function App() {
-  const { user, isLoggedIn, hasCompletedOnboarding, loadFromStorage } = useUserStore();
+  const [isReady, setIsReady] = useState(false);
+  // Subscribe to store changes
+  const user = useUserStore((state) => state.user);
+  const appMode = useUserStore((state) => state.appMode);
+  const loadFromStorage = useUserStore((state) => state.loadFromStorage);
 
   useEffect(() => {
     // Load user data from storage on app start
-    loadFromStorage();
-  }, []);
+    try {
+      loadFromStorage();
+    } catch (error) {
+      console.error('Error loading from storage:', error);
+    }
+    // Mark as ready - navigation will handle the actual routing
+    setIsReady(true);
+  }, [loadFromStorage]);
 
-  const loggedIn = !!isLoggedIn;
-  const onboardingDone = hasCompletedOnboarding ?? false;
+  if (!isReady) {
+    return null;
+  }
+
+  // Use Zustand store state directly
+  const loggedIn = user?.isLoggedIn ?? false;
+  const onboardingDone = appMode?.hasCompletedOnboarding ?? false;
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

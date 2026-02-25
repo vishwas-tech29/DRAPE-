@@ -1,7 +1,20 @@
 import { create } from 'zustand';
-import { MMKV } from 'react-native-mmkv';
+import { Platform } from 'react-native';
 
-export const storage = new MMKV();
+// MMKV is only available on native platforms, not web
+let storage: any = null;
+
+try {
+  // Only initialize MMKV on native platforms
+  if (Platform.OS !== 'web') {
+    const { MMKV } = require('react-native-mmkv');
+    storage = new MMKV();
+  }
+} catch (error) {
+  console.warn('MMKV initialization failed, using fallback storage:', error);
+  // Fallback for web or if MMKV fails
+  storage = null;
+}
 
 export interface User {
   id: string;
@@ -35,6 +48,9 @@ export interface CartItem {
   color: string;
   price: number;
 }
+
+// Export storage for use elsewhere if needed
+export { storage };
 
 interface AppMode {
   mode: 'shopping' | 'selling' | null;
@@ -117,7 +133,9 @@ export const useUserStore = create<UserStore>((set, get) => ({
         hasCompletedOnboarding: false,
       },
     });
-    storage.clearAll();
+    if (storage) {
+      storage.clearAll();
+    }
   },
 
   addToCart: (item: CartItem) => {
@@ -191,6 +209,10 @@ export const useUserStore = create<UserStore>((set, get) => ({
   },
 
   loadFromStorage: () => {
+    if (!storage) {
+      console.warn('Storage not available on this platform');
+      return;
+    }
     try {
       const userString = storage.getString('user');
       const modeString = storage.getString('appMode');
@@ -207,6 +229,10 @@ export const useUserStore = create<UserStore>((set, get) => ({
   },
 
   saveToStorage: () => {
+    if (!storage) {
+      console.warn('Storage not available on this platform');
+      return;
+    }
     try {
       const state = get();
       storage.set('user', JSON.stringify(state.user));
