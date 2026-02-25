@@ -27,8 +27,8 @@ if (Platform.OS !== 'web') {
     const { MMKV } = require('react-native-mmkv');
     storage = new MMKV();
   } catch (error) {
-    // Fall back to memory storage if MMKV fails
-    console.warn('MMKV not available, using memory storage');
+    // Silently fall back to memory storage if MMKV fails
+    // Both storages have the same interface, so no additional logging needed
   }
 }
 

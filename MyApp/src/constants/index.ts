@@ -1,4 +1,4 @@
-export { default as Colors } from './colors';
-export { default as Typography } from './typography';
-export { BorderRadius, Layout, Spacing, default } from './layout';
-export { default as Animations } from './animations';
+export { Colors } from './colors';
+export { Typography } from './typography';
+export { BorderRadius, Layout, Spacing } from './layout';
+export { Animations } from './animations';
